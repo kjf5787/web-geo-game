@@ -3,7 +3,9 @@ import { Solution } from "./DataTypes";
 import * as L from "leaflet";
 
 export const getStorage = () => {
-  return process.env.NODE_ENV === "production" ? localStorage : sessionStorage;
+  // return process.env.NODE_ENV === "production" ? localStorage : sessionStorage;
+  return process.env.NODE_ENV === "development" ? localStorage : sessionStorage;
+
 };
 
 const iconWidth = 478;
@@ -57,7 +59,8 @@ export let global_roles = [
 ];
 
 // data url without the langugage string
-let global_dataURL: string | undefined = undefined;
+// let global_dataURL: string | undefined = undefined;
+let global_dataURL: string | undefined = import.meta.env.VITE_DATA_URL;
 
 // this first loads the data URL from the server and then tries to fetch the data from the required URL
 export async function initGlobalData(socketServerURL: string, language: string | undefined, i18n: i18n) {
