@@ -26,6 +26,3 @@ dist-ssr
 
 # Will be versioned in the parent project
 public/
-
-# Changed only for dev enviornment 
-src/data/data.ts

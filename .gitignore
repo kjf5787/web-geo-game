@@ -5,5 +5,3 @@ dist
 .env
 client/public/
 .gitmodules
-
-client/src/data/data.ts
