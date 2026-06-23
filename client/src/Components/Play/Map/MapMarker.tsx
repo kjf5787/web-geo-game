@@ -50,32 +50,51 @@ export default function MapMarker({ marker, voting }: MapMarkerProps) {
       popupAnchor: [0, solution?.roundIcon ? -16 : -36], // top border
    });
 
-   if (marker.ownerPlayerID === localPlayerID) {
-      const localPlayerColor = getPlayerData(localPlayerID)?.color;
+   // if (marker.ownerPlayerID === localPlayerID) {
+   //    const localPlayerColor = getPlayerData(localPlayerID)?.color;
 
-      // Check if a style element for the local icon already exists
-      let style = document.querySelector(`#style-${localIconClassName}`);
-      if (!style) {
-         // Create the style element if it doesn't exist
-         style = document.createElement('style');
-         style.id = `style-${localIconClassName}`;
-         document.head.appendChild(style);
-      }
+   //    // Check if a style element for the local icon already exists
+   //    let style = document.querySelector(`#style-${localIconClassName}`);
+   //    if (!style) {
+   //       // Create the style element if it doesn't exist
+   //       style = document.createElement('style');
+   //       style.id = `style-${localIconClassName}`;
+   //       document.head.appendChild(style);
+   //    }
 
-      const color = getIconColor(localPlayerColor, 0.5);
-      // Update the style content dynamically
-      style.innerHTML = `
-         .${localIconClassName} {
-            background: ${color};
-            border-radius: 50%;
-            box-shadow: 0 0 5px 3px ${color};
-         }
-      `;
+   //    const color = getIconColor(localPlayerColor, 0.5);
+   //    // Update the style content dynamically
+   //    style.innerHTML = `
+   //       .${localIconClassName} {
+   //          background: ${color};
+   //          border-radius: 50%;
+   //          box-shadow: 0 0 5px 3px ${color};
+   //       }
+   //    `;
 
-      // if it is the player's marker, add a border to the icon
-      icon.options.className = localIconClassName;
+   //    // if it is the player's marker, add a border to the icon
+   //    icon.options.className = localIconClassName;
+   // }
+
+   const ownerColor = getPlayerData(marker.ownerPlayerID)?.color;
+   const color = getIconColor(ownerColor, 0.5);
+   
+   let style = document.querySelector(`#style-${localIconClassName}-${marker.id}`);
+   if (!style) {
+       style = document.createElement('style');
+       style.id = `style-${localIconClassName}-${marker.id}`;
+       document.head.appendChild(style);
    }
-
+   
+   style.innerHTML = `
+       .marker-icon-${marker.id} {
+           background: ${color};
+           border-radius: 50%;
+           box-shadow: 0 0 5px 3px ${color};
+       }
+   `;
+   
+   icon.options.className = `marker-icon-${marker.id}`;
    const player = getPlayerData(marker.ownerPlayerID);
 
    return (
