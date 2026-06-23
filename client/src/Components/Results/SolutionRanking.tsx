@@ -125,8 +125,8 @@ export default function SolutionRanking() {
                         borderRadius="50%"
                         display="inline-block"
                         padding="5px"
-                        width="100px"
-                        height="100px"
+                        width="80px"
+                        height="80px"
                         m="20px"
                      >
                         {
@@ -146,7 +146,7 @@ export default function SolutionRanking() {
                         }
                      </Box>
 
-                     <CardBody p="10px" pr="80px">
+                     <CardBody p="10px" pr="10px">
                         <Heading size='md'> {sol.name} </Heading>
                         <Text fontSize="12px"> {t('solution-info.placed-by')}: {getPlayerData(marker.ownerPlayerID)?.name}, {getPlayerData(marker.ownerPlayerID)?.role} </Text>
                         <Text fontSize="12px"> {t('solution-info.price')}: {sol.price} </Text>
@@ -160,7 +160,7 @@ export default function SolutionRanking() {
                         </Link>
                      </CardBody>
 
-                     <CardBody>
+                     <CardBody p="10px" pr="20px" flex="0" whiteSpace="nowrap">
                         <Text fontWeight="bold">
                            {t('solution-info.votes')}: {marker.votes.length}
                         </Text>
