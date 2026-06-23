@@ -78,9 +78,9 @@ function App() {
          case 'play':
             return <LocalGameDataProvider><Play /></LocalGameDataProvider>;
          case 'results':
-            return <MidGameResults />;
+            return <LocalGameDataProvider><MidGameResults /></LocalGameDataProvider>;;
          case 'end':
-            return <EndScreen />;
+            return <LocalGameDataProvider><EndScreen /></LocalGameDataProvider>;
          default:
             return <HomeScreen />;
       }
