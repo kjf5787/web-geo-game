@@ -1,7 +1,7 @@
 // Authors: Vojta Bruza, Grace Houser, and Kayla Fennell
-// Results Page 
+// Results Page
 
-import { Box, Button, Center, Text } from "@chakra-ui/react";
+import { Box, Button, Center, Text, HStack, VStack, Heading } from "@chakra-ui/react";
 import { useMemo, useEffect, useState } from "react";
 import { useConnection } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
@@ -9,28 +9,32 @@ import PlayerRanking from "./PlayerRanking";
 import { useTranslation } from "react-i18next";
 import { useRankedPlayers } from "./useRankedPlayers";
 import Confetti from 'react-confetti'
+import L from "leaflet";
+import GameMap from "../Play/Map/GameMap"
+import { useConfig } from "../Contexts/Config";
 
 export default function MidGameResults() {
     const { t } = useTranslation();
-    const { isFacilitator } = useGameRoom();
+    const config = useConfig();
+    const { isFacilitator, roomInfo } = useGameRoom();
     const { socket, localPlayerID } = useConnection();
     const rankedPlayers = useRankedPlayers();
     const isTopOfList = useMemo(
         () => rankedPlayers[0]?.id === localPlayerID,
         [rankedPlayers, localPlayerID]
     );
-    const [showConfetti, setShowConfetti] = useState(false)
+    const [showConfetti, setShowConfetti] = useState(false);
 
     const isFac = useMemo(() => isFacilitator(localPlayerID), [localPlayerID, isFacilitator]);
 
     useEffect(() => {
         if (isTopOfList) {
-            setShowConfetti(true)
+            setShowConfetti(true);
         }
     }, [isTopOfList]);
 
     return (
-        <Box overflow="auto" h="100%">
+        <>
             {showConfetti && (
                 <Confetti
                     width={window.innerWidth}
@@ -41,54 +45,70 @@ export default function MidGameResults() {
                 />
             )}
 
-            {/* Page Title */}
-            <Center>
-                <Text pt="70px"
-                    fontSize="4xl" fontWeight="bold" color="primary.500">
-                    {t('results.results')}
-                </Text>
-            </Center>
+            <HStack align="flex-start" h="100vh">
 
-            <Center>
-                <Text pb="20px" align="center"
-                    fontSize="lg" color="gray.900">
-                    {
-                        isFac ?
-                            t('results.click-to-progress')
-                            :
-                            t('results.check-score')
-                    }
-                </Text>
-            </Center>
-
-            {/* Rankings Section */}
-            <Center>
-                <Box overflow="auto"
-                    height="55vh"
-                    borderRadius="5px"
-                    padding="5"
-                    mb="20px"
-                    width="90%"
+                {/* Left Sidebar */}
+                <VStack
+                    align="top"
+                    width={{
+                        base: '450px',
+                        md: '450px',
+                    }}
+                    flexShrink={0}
+                    h="100vh"
+                    overflowY="auto"
                 >
-                    {/* Rankings */}
-                    <PlayerRanking />
-                </Box>
-            </Center>
+                    {/* Logo at top */}
+                    <Heading bg="none" pt="5px" textAlign="center"
+                        fontSize="18px" color="gray.900" fontWeight="bold">
+                        {config.app_name}
+                    </Heading>
 
-            {/* Next Button - to second round or end screen */}
-            <Center>
-                {isFac &&
-                    <Button
-                        mb="80px"
-                        bg='primary.500' color="white"
-                        _hover={{ bg: "white", color: "primary.500", borderColor: "primary.500", borderWidth: "2px" }}
-                        onClick={() => {
-                            socket.emit('progress-game');
-                        }}>
-                        {t('generic.continue')}
-                    </Button>
-                }
-            </Center>
-        </Box>
+                    {/* Page Title */}
+                    <Center>
+                        <Text pt="20px"
+                            fontSize="3xl" fontWeight="bold" color="primary.500">
+                            {t('results.results')}
+                        </Text>
+                    </Center>
+
+                    <Center>
+                        <Text pb="10px" align="center" px="10px"
+                            fontSize="sm" color="gray.900">
+                            {isFac ? t('results.click-to-progress') : t('results.check-score')}
+                        </Text>
+                    </Center>
+
+                    {/* Rankings Section */}
+                    <Box
+                        overflowY="auto"
+                        flex="1"
+                        borderRadius="5px"
+                        padding="3"
+                        width="100%"
+                    >
+                        <PlayerRanking />
+                    </Box>
+
+                    {/* Next Button */}
+                    <Center pb="20px">
+                        {isFac &&
+                            <Button
+                                bg='primary.500' color="white"
+                                _hover={{ bg: "white", color: "primary.500", borderColor: "primary.500", borderWidth: "2px" }}
+                                onClick={() => { socket.emit('progress-game'); }}>
+                                {t('generic.continue')}
+                            </Button>
+                        }
+                    </Center>
+                </VStack>
+
+                {/* Game Map */}
+                <Box flex="1" height="100vh">
+                    <GameMap polygon={new L.Polygon(roomInfo?.polygonLatLngs)} />
+                </Box>
+
+            </HStack>
+        </>
     );
 }
