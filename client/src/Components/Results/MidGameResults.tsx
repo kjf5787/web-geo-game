@@ -8,34 +8,36 @@ import { useGameRoom } from "../Contexts/GameRoomContext";
 import PlayerRanking from "./PlayerRanking";
 import { useTranslation } from "react-i18next";
 import { useRankedPlayers } from "./useRankedPlayers";
-import Confetti from 'react-confetti'
+// import Confetti from 'react-confetti'
 import L from "leaflet";
 import GameMap from "../Play/Map/GameMap"
 import { useConfig } from "../Contexts/Config";
+import { useLocalGameData } from "../Contexts/LocalGameContext";
 
 export default function MidGameResults() {
     const { t } = useTranslation();
     const config = useConfig();
     const { isFacilitator, roomInfo } = useGameRoom();
     const { socket, localPlayerID } = useConnection();
+    const { setSelectedMarkerID, setSelectedPlayerID } = useLocalGameData();
     const rankedPlayers = useRankedPlayers();
     const isTopOfList = useMemo(
         () => rankedPlayers[0]?.id === localPlayerID,
         [rankedPlayers, localPlayerID]
     );
-    const [showConfetti, setShowConfetti] = useState(false);
+    // const [showConfetti, setShowConfetti] = useState(false);
 
     const isFac = useMemo(() => isFacilitator(localPlayerID), [localPlayerID, isFacilitator]);
 
-    useEffect(() => {
-        if (isTopOfList) {
-            setShowConfetti(true);
-        }
-    }, [isTopOfList]);
+    // useEffect(() => {
+    //     if (isTopOfList) {
+    //         setShowConfetti(true);
+    //     }
+    // }, [isTopOfList]);
 
     return (
         <>
-            {showConfetti && (
+            {/* {showConfetti && (
                 <Confetti
                     width={window.innerWidth}
                     height={window.innerHeight}
@@ -43,7 +45,7 @@ export default function MidGameResults() {
                     gravity={0.15}
                     onConfettiComplete={() => setShowConfetti(false)}
                 />
-            )}
+            )} */}
 
             <HStack align="flex-start" h="100vh">
 
@@ -104,7 +106,7 @@ export default function MidGameResults() {
                 </VStack>
 
                 {/* Game Map */}
-                <Box flex="1" height="100vh">
+                <Box flex="1" height="100vh" onClick={() => { setSelectedMarkerID(null); setSelectedPlayerID(null); }}>
                     <GameMap polygon={new L.Polygon(roomInfo?.polygonLatLngs)} />
                 </Box>
 
