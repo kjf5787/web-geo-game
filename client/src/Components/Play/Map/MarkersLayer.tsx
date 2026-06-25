@@ -6,6 +6,7 @@ import { RoundStage } from "../../../data/DataTypes";
 import { useGameMarkers } from "../../Contexts/GameMarkersContext";
 import { useGameRoom } from "../../Contexts/GameRoomContext";
 import MapMarker from "./MapMarker";
+import { useLocalGameData } from "../../Contexts/LocalGameContext";
 
 // Function to blend between two colors
 const blendColors = (count: number) => {
@@ -28,10 +29,14 @@ const blendColors = (count: number) => {
    return `rgb(${r}, ${g}, ${b})`;
 };
 
-export default function MarkersLayer() {
+export default function MarkersLayer({ showPopup = true, selectable = false }: { showPopup?: boolean, selectable?: boolean }) {
    const { markers } = useGameMarkers();
    const { gameRoomState } = useGameRoom();
    const map = useMap();
+   const { selectedPlayerID } = useLocalGameData();
+   const visibleMarkers = selectedPlayerID
+      ? markers.filter(m => m.ownerPlayerID === selectedPlayerID)
+      : markers;
 
    useEffect(() => {
       if (map) {
@@ -64,11 +69,13 @@ export default function MarkersLayer() {
          iconCreateFunction={createClusterIcon}
          key={markers.length}  // Force re-render on markers change
       >
-         {markers.map((marker) => (
+         {visibleMarkers.map((marker) => (
             <MapMarker
                key={marker.id}
                marker={marker}
                voting={gameRoomState?.round.stage === RoundStage.Voting}
+               showPopup={showPopup}
+               selectable={selectable}
             />
          ))}
       </MarkerClusterGroup>
