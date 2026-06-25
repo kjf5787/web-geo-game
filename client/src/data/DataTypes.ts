@@ -13,6 +13,7 @@ export interface PlayerData {
    id: string;
    role: string;
    color: string;
+   icon: string;
    name: string;
    isFacilitator: boolean;
 }
