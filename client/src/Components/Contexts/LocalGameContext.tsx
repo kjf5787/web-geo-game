@@ -10,6 +10,8 @@ interface LocalGameDataContextProps {
    selectedMarkerID: number | null;
    setSelectedMarkerID: (id: number | null) => void;
    getSelectedMarker: () => MapMarkerData | undefined;
+   selectedPlayerID: string | null;
+   setSelectedPlayerID: (id: string | null) => void;
 }
 
 const LocalGameDataContext = createContext<LocalGameDataContextProps | undefined>(undefined);
@@ -18,7 +20,7 @@ export const LocalGameDataProvider = ({ children }: { children: ReactNode }) => 
    const { markers } = useGameMarkers();
    const [selectedSolutionID, setSelectedSolutionID] = useState<string | null>(null);
    const [selectedMarkerID, setSelectedMarkerID] = useState<number | null>(null);
-
+   const [selectedPlayerID, setSelectedPlayerID] = useState<string | null>(null);
 
    const getSelectedSolution = () => {
       return getSolution(selectedSolutionID);
@@ -37,6 +39,8 @@ export const LocalGameDataProvider = ({ children }: { children: ReactNode }) => 
             selectedMarkerID,
             setSelectedMarkerID,
             getSelectedMarker,
+            selectedPlayerID,
+            setSelectedPlayerID,
          }}
       >
          {children}
