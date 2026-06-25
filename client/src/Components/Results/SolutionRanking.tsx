@@ -10,6 +10,7 @@ import { getIconColor } from "../Lobby/Icon";
 import { getSolutionImagePath } from "../Play/Game/SolutionInfoCard";
 import { CustomLatLng } from "../../data/DataTypes";
 import { useTranslation } from "react-i18next";
+import { useLocalGameData } from "../Contexts/LocalGameContext";
 
 export function getOSMLink(coordinates: CustomLatLng) {
    return `https://www.openstreetmap.org/?mlat=${coordinates.lat}&mlon=${coordinates.lng}#map=15/${coordinates.lat}/${coordinates.lng}`;
@@ -20,6 +21,7 @@ export default function SolutionRanking() {
    const { t } = useTranslation();
    const { markers } = useGameMarkers();
    const { getPlayerData, players, roomInfo } = useGameRoom();
+   const { setSelectedMarkerID, selectedMarkerID } = useLocalGameData();
 
    const downloadFile = (dataStr: string, format: "csv" | "json") => {
       const downloadString = `data:text/${format};charset=utf-8,` + encodeURIComponent(dataStr);
@@ -118,8 +120,12 @@ export default function SolutionRanking() {
                      bg="white"
                      color="gray.900"
                      mb="5px"
-                     align="center">
-
+                     align="center"
+                     onClick={() => setSelectedMarkerID(selectedMarkerID === marker.id ? null : marker.id)}
+                     cursor="pointer"
+                     border={selectedMarkerID === marker.id ? "2px solid" : "2px solid transparent"}
+                     borderColor={selectedMarkerID === marker.id ? getIconColor(getPlayerData(marker.ownerPlayerID)?.color) : "transparent"}
+                  >
                      <Box
                         backgroundColor={getIconColor(getPlayerData(marker.ownerPlayerID)?.color) || "white"}
                         borderRadius="50%"

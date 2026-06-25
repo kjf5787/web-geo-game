@@ -9,10 +9,12 @@ import { useGameMarkers } from "../Contexts/GameMarkersContext";
 import { getSolution } from "../../data/data";
 import { useTranslation } from "react-i18next";
 import { useRankedPlayers } from "./useRankedPlayers";
+import { useLocalGameData } from "../Contexts/LocalGameContext";
 
 export default function PlayerRanking() {
     const { t } = useTranslation();
     const rankedPlayers = useRankedPlayers();
+    const { selectedPlayerID, setSelectedPlayerID } = useLocalGameData();
 
     return (
         <Center>
@@ -28,6 +30,10 @@ export default function PlayerRanking() {
                             key={player.id}
                             height="100px"
                             width="100%"
+                            onClick={() => setSelectedPlayerID(selectedPlayerID === player.id ? null : player.id)}
+                            cursor="pointer"
+                            border="2px solid"
+                            borderColor={selectedPlayerID === player.id ? player.color : "transparent"}
                         >
                             <Icon color={player.color} />
                             <CardBody p="10px" pr="80px">
