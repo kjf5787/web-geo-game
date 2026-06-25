@@ -11,9 +11,11 @@ import MapSearch from "./MapSearch";
 
 interface GameMapProps {
    polygon: L.Polygon | null;
+   showPopup?: boolean;
+   selectable?: boolean;
 }
 
-export default function GameMap({ polygon }: GameMapProps) {
+export default function GameMap({ polygon, showPopup = true, selectable = false }: GameMapProps) {
    const { socket } = useConnection();
 
    useEffect(() => {
@@ -40,7 +42,7 @@ export default function GameMap({ polygon }: GameMapProps) {
          <MapSearch bounds={polygon.getBounds()}/>
          <MapInitializer bounds={bounds} />
          <LayerControl />
-         <MarkersLayer />
+         <MarkersLayer showPopup={showPopup} selectable={selectable} />
          <MapMask polygonCoords={polygonCoords} />
       </MapContainer>
    );
