@@ -35,7 +35,7 @@ export default function PlayerRanking() {
                             border="2px solid"
                             borderColor={selectedPlayerID === player.id ? player.color : "transparent"}
                         >
-                            <Icon color={player.color} />
+                            <Icon color={player.color} icon={player.icon} />
                             <CardBody p="10px" pr="80px">
                                 <Heading size='md'> {player.name} </Heading>
                                 <Text fontSize="12px"> {player.role} </Text>
