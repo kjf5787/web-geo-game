@@ -1,4 +1,4 @@
-// Authors: Vojtech Bruza and Grace Houser
+// Authors: Vojtech Bruza, Grace Houser, and Kayla Fennell
 import {
     Button,
     ButtonGroup,
@@ -73,7 +73,7 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
     const { updatePlayer, getPlayerData, players } = useGameRoom();
     const [name, setName] = useState(player.name || "");
     const [selectedColor, setSelectedColor] = useState(player.color || "default");
-    const [selectedIcon, setSelectedIcon] = useState(player.icon || "Person");
+    const [selectedIcon, setSelectedIcon] = useState(player.icon || "FaUser");
     const firstFieldRef = React.useRef<HTMLInputElement>(null);
     const toast = useToast();
     const { localPlayerID } = useConnection();
