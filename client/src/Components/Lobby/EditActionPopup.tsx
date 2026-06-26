@@ -20,6 +20,8 @@ import { useConnection } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import TextInput from "./TextInput";
 import { useTranslation } from "react-i18next";
+import { FaUser, FaUserAlt, FaUserCircle, FaUserNinja, FaUserTie, FaUserGraduate, FaChild, FaSmile, FaSmileBeam, FaSmileWink, FaGrinAlt, FaGrinBeam } from "react-icons/fa";
+import { Box } from "@chakra-ui/react";
 
 // Props Interface
 interface EditActionPopupProps {
@@ -28,8 +30,24 @@ interface EditActionPopupProps {
     player: {
         name: string;
         color: string;
+        icon?: string;
     };
 }
+
+const ICON_OPTIONS: { name: string; component: React.ElementType }[] = [
+    { name: "FaUser", component: FaUser },
+    { name: "FaUserAlt", component: FaUserAlt },
+    { name: "FaUserCircle", component: FaUserCircle },
+    { name: "FaUserNinja", component: FaUserNinja },
+    { name: "FaUserTie", component: FaUserTie },
+    { name: "FaUserGraduate", component: FaUserGraduate },
+    { name: "FaChild", component: FaChild },
+    { name: "FaSmile", component: FaSmile },
+    { name: "FaSmileBeam", component: FaSmileBeam },
+    { name: "FaSmileWink", component: FaSmileWink },
+    { name: "FaGrinAlt", component: FaGrinAlt },
+    { name: "FaGrinBeam", component: FaGrinBeam },
+];
 
 // Main Component
 const EditActionPopup: React.FC<EditActionPopupProps> = ({
@@ -40,6 +58,7 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
     const { updatePlayer, getPlayerData, players } = useGameRoom();
     const [name, setName] = useState(player.name || "");
     const [selectedColor, setSelectedColor] = useState(player.color || "default");
+    const [selectedIcon, setSelectedIcon] = useState(player.icon || "Person");
     const firstFieldRef = React.useRef<HTMLInputElement>(null);
     const toast = useToast();
     const { localPlayerID } = useConnection();
@@ -59,6 +78,7 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
         }
         localPlayer.color = selectedColor;
         localPlayer.name = name;
+        localPlayer.icon = selectedIcon;
         updatePlayer(localPlayer);
         onClose();
     };
@@ -109,6 +129,35 @@ const EditActionPopup: React.FC<EditActionPopupProps> = ({
                                 ))}
                             </Grid>
                         </ButtonGroup>
+                    </FormControl>
+
+                    {/* Icon Picker */}
+                    <FormControl mt={4}>
+                        <FormLabel>Choose Icon</FormLabel>
+                        <Grid
+                            gap="4px"
+                            templateColumns="repeat(auto-fit, minmax(48px, 1fr))"
+                            width="100%"
+                        >
+                            {ICON_OPTIONS.map(({ name, component: IconComp }) => (
+                                <Box
+                                    key={name}
+                                    as="button"
+                                    onClick={() => setSelectedIcon(name)}
+                                    border={selectedIcon === name ? "3px solid black" : "2px solid transparent"}
+                                    borderRadius="md"
+                                    p="6px"
+                                    bg={selectedIcon === name ? "gray.200" : "gray.100"}
+                                    _hover={{ bg: "gray.200" }}
+                                    display="flex"
+                                    alignItems="center"
+                                    justifyContent="center"
+                                    height="40px"
+                                >
+                                    <IconComp size={22} />
+                                </Box>
+                            ))}
+                        </Grid>
                     </FormControl>
                 </ModalBody>
 
