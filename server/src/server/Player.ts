@@ -6,6 +6,7 @@ export class Player {
    public id: string;
    public role: string;
    public color: string;
+   public icon: string;
    public name: string;
    private socket: Socket;
 
@@ -13,6 +14,7 @@ export class Player {
       this.id = id;
       this.role = role;
       this.color = color;
+      this.icon = "FaUser";
       this.name = name;
       this.socket = socket;
    }
@@ -20,6 +22,7 @@ export class Player {
    update(playerData: PlayerData) {
       this.name = playerData.name;
       this.color = playerData.color;
+      this.icon = playerData.icon;
       this.role = playerData.role;
    }
 

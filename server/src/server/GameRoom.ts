@@ -486,6 +486,7 @@ export class GameRoom {
             id: player.id,
             role: player.role,
             color: player.color,
+            icon: player.icon,
             name: player.name,
             isFacilitator: player.id === this.facilitator
         }));
