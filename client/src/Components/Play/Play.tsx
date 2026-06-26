@@ -2,7 +2,7 @@
 // This file pieces together the entire pay screen,
 // which includes the left game screen, map, and modals 
 
-import { Box, Heading, HStack, VStack } from "@chakra-ui/react";
+import { Box, Heading, HStack, VStack, Divider } from "@chakra-ui/react";
 import L from "leaflet";
 import { useMemo } from "react";
 import { useTranslation } from "react-i18next";
@@ -14,6 +14,7 @@ import GameMap from "./Map/GameMap";
 import PlayModal from "./PlayModal";
 import Voting from "./Voting/Voting";
 import { useConfig } from "../Contexts/Config";
+import PlayerInfoBar from "../PlayerInfoBar";
 
 export default function Play() {
    const { t } = useTranslation();
@@ -58,37 +59,41 @@ export default function Play() {
    return (
       <>
          {getModalWindowPopup()}
-         <HStack bg="primary.500" align="flex-start" h="100vh">
+         <HStack bg="primary.500" align="flex-start" h="100vh" gap="0">
 
             {/* Left Sidebar */}
-            <VStack
-               align={"top"}
-               width={{
-                  // TODO make this fullscreen for mobile (base)
-                  base: '300px',  // For mobile (sm and below)
-                  md: '300px',    // For larger (md and above)
-               }}
+            <Box
+               width={{ base: '300px', md: '300px' }}
                flexShrink={0}
+               h="100vh"
+               display="flex"
+               flexDirection="column"
             >
+               {/* Scrollable content */}
+               <VStack align="top" flex="1" overflowY="auto">
+                  {/* Logo at top */}
+                  <Heading bg="none" pt="5px" textAlign="center"
+                        fontSize="18px" color="gray.900" fontWeight="bold">
+                        {config.app_name}
+                  </Heading>
 
-               {/* Logo at top */}
-               <Heading bg="none" pt="5px" textAlign="center"
-                  fontSize="18px" color="gray.900" fontWeight="bold">
-                  {config.app_name}
-               </Heading>
+                  {/* Game or voting */}
+                  {
+                        gameRoomState?.round.stage === RoundStage.Placing
+                        &&
+                        <Game isFacilitator={isFac} />
+                  }
+                  {
+                        gameRoomState?.round.stage === RoundStage.Voting
+                        &&
+                        <Voting isFacilitator={isFac} />
+                  }
+               </VStack>
 
-               {/* Game or voting */}
-               {
-                  gameRoomState?.round.stage === RoundStage.Placing
-                  &&
-                  <Game isFacilitator={isFac} />
-               }
-               {
-                  gameRoomState?.round.stage === RoundStage.Voting
-                  &&
-                  <Voting isFacilitator={isFac} />
-               }
-            </VStack>
+               {/* Player Info Bar */}
+               <Divider/>
+               <PlayerInfoBar />
+            </Box>
 
             {/* Game Map */}
             <Box flex="1" height="100vh">
