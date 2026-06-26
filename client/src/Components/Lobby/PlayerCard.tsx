@@ -144,7 +144,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
         <EditActionPopup
           isOpen={isEditing}
           onClose={() => setIsEditing(false)}
-          player={{ name: player.name, color: player.color }}
+          player={{ name: player.name, color: player.color, icon: player.icon }}
         />
       )}
     </Card>
