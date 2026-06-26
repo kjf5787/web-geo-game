@@ -59,7 +59,7 @@ export default function PlayerCard({ player }: PlayerCardProps) {
 
         {/* Icon */}
         <Box flex="1" textAlign="left">
-          <Icon color={player.color} />
+          <Icon color={player.color} icon={player.icon} />
         </Box>
 
         {/* Player Info */}
