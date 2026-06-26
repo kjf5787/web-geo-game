@@ -3,8 +3,13 @@ import { Avatar, Box } from "@chakra-ui/react";
 import React from "react";
 import "../../Theme/theme.css";
 import { global_icon_colors } from "../../data/DataTypes";
-import { FaUser, FaUserAlt, FaUserCircle, FaUserNinja, FaUserTie, FaUserGraduate, FaChild, FaSmile, FaSmileBeam, FaSmileWink, FaGrinAlt, FaGrinBeam } from "react-icons/fa";
-import { IconType } from "react-icons";
+import { 
+    FaUser, FaUserNinja, FaUserTie, 
+    FaUserGraduate, FaChild, FaSmile, FaSmileBeam, FaSmileWink, 
+    FaGrinAlt, FaGrinBeam,
+    FaStar, FaHeart, FaBolt, FaFire, FaSnowflake,
+    FaMusic, FaRocket, FaCrown, FaGem, FaDragon, FaLeaf
+} from "react-icons/fa";import { IconType } from "react-icons";
 
 // IconProps interface
 interface IconProps {
@@ -32,9 +37,11 @@ const hexToRgba = (hex: string, alpha: number) => {
 };
 
 const ICON_MAP: Record<string, IconType> = {
-    FaUser, FaUserAlt, FaUserCircle, FaUserNinja, FaUserTie,
+    FaUser, FaUserNinja, FaUserTie,
     FaUserGraduate, FaChild, FaSmile, FaSmileBeam, FaSmileWink,
-    FaGrinAlt, FaGrinBeam
+    FaGrinAlt, FaGrinBeam,
+    FaStar, FaHeart, FaBolt, FaFire, FaSnowflake,
+    FaMusic, FaRocket, FaCrown, FaGem, FaDragon, FaLeaf
 };
 
 const Icon: React.FC<IconProps> = ({ color, icon }) => {

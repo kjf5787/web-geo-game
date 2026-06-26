@@ -20,7 +20,13 @@ import { useConnection } from "../Contexts/ConnectionContext";
 import { useGameRoom } from "../Contexts/GameRoomContext";
 import TextInput from "./TextInput";
 import { useTranslation } from "react-i18next";
-import { FaUser, FaUserAlt, FaUserCircle, FaUserNinja, FaUserTie, FaUserGraduate, FaChild, FaSmile, FaSmileBeam, FaSmileWink, FaGrinAlt, FaGrinBeam } from "react-icons/fa";
+import { 
+    FaUser, FaUserNinja, FaUserTie, 
+    FaUserGraduate, FaChild, FaSmile, FaSmileBeam, FaSmileWink, 
+    FaGrinAlt, FaGrinBeam,
+    FaStar, FaHeart, FaBolt, FaFire, FaSnowflake,
+    FaMusic, FaRocket, FaCrown, FaGem, FaDragon, FaLeaf
+} from "react-icons/fa";
 import { Box } from "@chakra-ui/react";
 
 // Props Interface
@@ -36,8 +42,6 @@ interface EditActionPopupProps {
 
 const ICON_OPTIONS: { name: string; component: React.ElementType }[] = [
     { name: "FaUser", component: FaUser },
-    { name: "FaUserAlt", component: FaUserAlt },
-    { name: "FaUserCircle", component: FaUserCircle },
     { name: "FaUserNinja", component: FaUserNinja },
     { name: "FaUserTie", component: FaUserTie },
     { name: "FaUserGraduate", component: FaUserGraduate },
@@ -47,6 +51,17 @@ const ICON_OPTIONS: { name: string; component: React.ElementType }[] = [
     { name: "FaSmileWink", component: FaSmileWink },
     { name: "FaGrinAlt", component: FaGrinAlt },
     { name: "FaGrinBeam", component: FaGrinBeam },
+    { name: "FaStar", component: FaStar },
+    { name: "FaHeart", component: FaHeart },
+    { name: "FaBolt", component: FaBolt },
+    { name: "FaFire", component: FaFire },
+    { name: "FaSnowflake", component: FaSnowflake },
+    { name: "FaMusic", component: FaMusic },
+    { name: "FaRocket", component: FaRocket },
+    { name: "FaCrown", component: FaCrown },
+    { name: "FaGem", component: FaGem },
+    { name: "FaDragon", component: FaDragon },
+    { name: "FaLeaf", component: FaLeaf },
 ];
 
 // Main Component
