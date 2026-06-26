@@ -10,6 +10,7 @@ import { getSolution } from "../../data/data";
 import { useTranslation } from "react-i18next";
 import { useRankedPlayers } from "./useRankedPlayers";
 import { useLocalGameData } from "../Contexts/LocalGameContext";
+import { getIconColor } from "../Lobby/Icon";
 
 export default function PlayerRanking() {
     const { t } = useTranslation();
@@ -33,7 +34,7 @@ export default function PlayerRanking() {
                             onClick={() => setSelectedPlayerID(selectedPlayerID === player.id ? null : player.id)}
                             cursor="pointer"
                             border="2px solid"
-                            borderColor={selectedPlayerID === player.id ? player.color : "transparent"}
+                            borderColor={selectedPlayerID === player.id ? getIconColor(player.color) : "transparent"}
                         >
                             <Icon color={player.color} icon={player.icon} />
                             <CardBody p="10px" pr="80px">
