@@ -3,7 +3,8 @@ import { Avatar, Box } from "@chakra-ui/react";
 import React from "react";
 import "../../Theme/theme.css";
 import { global_icon_colors } from "../../data/DataTypes";
-import * as MuiIcons from "@mui/icons-material";
+import { FaUser, FaUserAlt, FaUserCircle, FaUserNinja, FaUserTie, FaUserGraduate, FaChild, FaSmile, FaSmileBeam, FaSmileWink, FaGrinAlt, FaGrinBeam } from "react-icons/fa";
+import { IconType } from "react-icons";
 
 // IconProps interface
 interface IconProps {
@@ -30,11 +31,17 @@ const hexToRgba = (hex: string, alpha: number) => {
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
 };
 
+const ICON_MAP: Record<string, IconType> = {
+    FaUser, FaUserAlt, FaUserCircle, FaUserNinja, FaUserTie,
+    FaUserGraduate, FaChild, FaSmile, FaSmileBeam, FaSmileWink,
+    FaGrinAlt, FaGrinBeam
+};
+
 const Icon: React.FC<IconProps> = ({ color, icon }) => {
-    
+
     // Determine the CSS variable for the user's selected color
     const userColor = getIconColor(color);
-    const MuiIcon = icon ? (MuiIcons as any)[icon] : MuiIcons.Person;
+    const IconComp = (icon && ICON_MAP[icon]) ? ICON_MAP[icon] : FaUser;
 
     // Return the Icon with the appropriate background color
     return (
@@ -50,7 +57,7 @@ const Icon: React.FC<IconProps> = ({ color, icon }) => {
             alignItems="center"
             justifyContent="center"
         >
-            <MuiIcon sx={{ color: "white", fontSize: 24 }} />
+            <IconComp size={22} color="white" />
         </Box>
     );
 };
